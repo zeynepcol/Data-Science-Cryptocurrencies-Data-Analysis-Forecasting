@@ -2,6 +2,8 @@
 
 This project aims to analyze and forecast the future prices of **10 different cryptocurrencies** by utilizing historical financial data collected from the **Binance API**. A web-based interface is developed using **Python** and **Flask** to visualize and interact with the predictions.
 
+![Image](https://github.com/user-attachments/assets/b5a62fc2-5b3a-4531-85a3-3e2fdfbb2d4b)
+
 ---
 
 ## 🔄 Project Workflow
