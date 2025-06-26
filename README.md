@@ -1,4 +1,4 @@
-<h1 align="center">Cryptocurrencies Financial Data Analysis and Forecasting</h1>
+<h1 align="center"> CRYPTOCURRENCIES FINANCIAL DATA ANALYSIS AND FORECASTING </h1>
 
 This project aims to analyze and forecast the future prices of **10 different cryptocurrencies** by utilizing historical financial data collected from the **Binance API**. A web-based interface is developed using **Python** and **Flask** to visualize and interact with the predictions.
 
