@@ -100,5 +100,9 @@ The LSTM model uses a window size of 21 days (`LSTM_WINDOW = 21`) to look back o
 - **TensorFlow/Keras** (Deep learning with LSTM)  
 
 ---
+## 👥 Team Members 
 
-
+- **Burak SAYAR** – [GitHub Profile](https://github.com/BurakSayar)
+- **Mert BUYUKNISAN** – [GitHub Profile](https://github.com/MertBuyuknisan)
+- **Rahime GEDİK** – [GitHub Profile](https://github.com/rahimegedik)
+- **Zeynep COL** – [GitHub Profile](https://github.com/zeynepcol)
