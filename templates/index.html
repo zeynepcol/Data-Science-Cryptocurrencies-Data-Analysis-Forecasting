@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <title>Kripto Fiyat Tahmini Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f3f4f7;
+            color: #222;
+            margin: 0;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 36px auto;
+            padding: 0 12px;
+        }
+        .header {
+            background: #222; color: #fff;
+            border-radius: 16px;
+            padding: 28px 30px 18px 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 24px #b6b6e755;
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap;
+        }
+        .header h2 {
+            margin: 0; font-size: 2.2em; font-weight: 600; letter-spacing: 0.02em;
+        }
+        .header small { color: #eee; font-size: 1.07em; }
+        .form-area {
+            background: #fff;
+            border-radius: 12px;
+            padding: 22px 24px 6px 24px;
+            box-shadow: 0 2px 16px #ddd;
+            margin-bottom: 30px;
+            display: flex; flex-wrap: wrap; align-items: flex-end; gap: 14px;
+        }
+        label { font-weight: 500; margin-right: 9px; }
+        select, button {
+            font-size: 1em;
+            padding: 7px 12px;
+            border-radius: 7px;
+            border: 1.2px solid #c3c3d3;
+            background: #f7f7fc;
+            color: #21215f;
+            outline: none;
+        }
+        select:focus, button:focus { border-color: #a1a1fa; }
+        button {
+            background: linear-gradient(90deg,#4e62fa,#7f91fc);
+            color: #fff; font-weight: 500;
+            border: none;
+            box-shadow: 0 1px 7px #b3b3fa33;
+            transition: background 0.17s;
+        }
+        button:hover { background: linear-gradient(90deg,#3044da,#4e62fa); }
+        .card {
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 2px 16px #e0e2ef;
+            padding: 24px 28px 16px 28px;
+            margin-bottom: 28px;
+        }
+        .metrics-row {
+            display: flex;
+            gap: 24px;
+            margin: 10px 0 22px 0;
+            flex-wrap: wrap;
+        }
+        .metric {
+            flex: 1 1 140px;
+            background: #f5f6fa;
+            border-radius: 12px;
+            padding: 17px 10px 12px 18px;
+            min-width: 120px;
+            box-shadow: 0 1px 6px #b3b3ee33;
+            text-align: left;
+        }
+        .metric .title {
+            font-size: 1.09em;
+            color: #7c87c2;
+        }
+        .metric .value {
+            font-size: 1.23em;
+            color: #283883;
+            font-weight: 600;
+            margin-top: 3px;
+        }
+        .section-title {
+            margin-top: 0;
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #344288;
+        }
+        .graph-box {
+            background: #f9faff;
+            border-radius: 14px;
+            box-shadow: 0 2px 16px #e0e1ef;
+            padding: 12px 12px 18px 12px;
+            margin-bottom: 22px;
+            text-align: center;
+        }
+        img.forecast { border: 1px solid #dde1f0; margin-top: 4px; margin-bottom: 4px; border-radius: 10px; }
+        @media (max-width:700px) {
+            .container { padding: 0 2vw; }
+            .header { flex-direction: column; padding: 20px 12px 13px 12px; }
+            .header h2 { font-size: 1.38em; }
+            .form-area { flex-direction: column; gap: 10px; }
+            .metrics-row { flex-direction: column; gap: 7px;}
+            .card { padding: 13px 8px 12px 12px;}
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="header">
+        <h2>Kripto Fiyat Tahmini ve Model Karşılaştırma</h2>
+    </div>
+
+    <form method="post" class="form-area">
+        <label>Coin Seç:</label>
+        <select name="coin">
+            {% for fname, cname in coins.items() %}
+            <option value="{{fname}}" {% if fname == selected_coin %}selected{% endif %}>{{cname}}</option>
+            {% endfor %}
+        </select>
+        <label>Model Seç:</label>
+        <select name="model">
+            {% for model in models %}
+            <option value="{{model}}" {% if model == selected_model %}selected{% endif %}>{{model}}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Tahmin Et</button>
+        {% if metrics %}
+        <span style="margin-left:24px;color:#6a75ad;">Seçili: <b>{{ coins[selected_coin] }}</b> - <b>{{ selected_model }}</b></span>
+        {% endif %}
+    </form>
+
+    {% if plot_file_main %}
+    <div class="card">
+        <div class="section-title">Test Seti: Gerçek vs. Tahmin <small style="color:#8c9aad">(Model: {{ selected_model }}, Coin: {{ coins[selected_coin] }})</small></div>
+        <div class="metrics-row">
+            <div class="metric">
+                <div class="title">RMSE</div>
+                <div class="value">{{ "%.2f"|format(metrics[0]) }}</div>
+            </div>
+            <div class="metric">
+                <div class="title">MAE</div>
+                <div class="value">{{ "%.2f"|format(metrics[1]) }}</div>
+            </div>
+            <div class="metric">
+                <div class="title">R²</div>
+                <div class="value">{{ "%.2f"|format(metrics[2]) }}</div>
+            </div>
+        </div>
+        <div class="graph-box">
+            <img src="{{ url_for('plot_file', filename=plot_file_main) }}" width="97%" style="max-width:950px;" class="forecast"/>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if plot_file_forecast %}
+    <div class="card">
+        <div class="section-title">
+            Gelecek Tahmin:
+            <span style="color:#1d389e;">
+                {{ FUTURE_STEPS if FUTURE_STEPS else 'N' }} Günlük Fiyat
+            </span>
+        </div>
+        <div class="graph-box">
+            <img src="{{ url_for('plot_file', filename=plot_file_forecast) }}" width="80%" style="max-width:750px;" class="forecast"/>
+        </div>
+    </div>
+    {% endif %}
+</div>
+</body>
+</html>
