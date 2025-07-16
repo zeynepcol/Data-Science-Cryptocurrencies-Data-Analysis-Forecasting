@@ -4,7 +4,6 @@ This project aims to analyze and forecast the future prices of **10 different cr
 
 ![Image](https://github.com/user-attachments/assets/b5a62fc2-5b3a-4531-85a3-3e2fdfbb2d4b)
 
----
 
 ## 🔄 Project Workflow
 
@@ -30,7 +29,7 @@ This project aims to analyze and forecast the future prices of **10 different cr
 
    Models were evaluated with metrics including **MAE (Mean Absolute Error)**, **RMSE (Root Mean Square Error)**, and **R² Score**. The LSTM model showed strong performance in capturing temporal patterns in cryptocurrency prices.
 
----
+
 
 ## 📊 Dataset Features
 
@@ -47,7 +46,7 @@ Each dataset contains **6 main features**:
 
 Datasets are stored in `.csv` format and enriched with technical indicators during preprocessing.
 
----
+
 
 ## 📁 Included Datasets
 
@@ -62,7 +61,6 @@ Datasets are stored in `.csv` format and enriched with technical indicators duri
 - `XMR-USD.csv` (Monero)  
 - `SOL-USD.csv` (Solana)  
 
----
 
 
 ## 🌐 Web Interface
@@ -75,7 +73,7 @@ A user-friendly web interface is developed with **Flask**, providing:
 
 The main web page (`index.html`) is located in the `templates/` folder.
 
----
+
 
 ## 🧠 Machine Learning Models
 
@@ -87,7 +85,7 @@ The main web page (`index.html`) is located in the `templates/` folder.
 
 The LSTM model uses a window size of 21 days (`LSTM_WINDOW = 21`) to look back on historical data and predicts prices 7 days into the future (`FUTURE_STEPS = 7`).
 
----
+
 
 ## 🛠️ Technologies & Libraries
 
@@ -99,7 +97,8 @@ The LSTM model uses a window size of 21 days (`LSTM_WINDOW = 21`) to look back o
 - **Scikit-learn**, **XGBoost** (Machine learning)  
 - **TensorFlow/Keras** (Deep learning with LSTM)  
 
----
+
+
 ## 👥 Team Members 
 
 - **Burak SAYAR** – [GitHub Profile](https://github.com/BurakSayar)
